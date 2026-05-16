@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dunn Maintenance — Honest Work. Clean Results. | Longview, WA</title>
+<meta name="description" content="Dunn Maintenance — over 10 years of pressure washing and home maintenance in Longview, WA and the Pacific Northwest. Fair quotes, quick response, work done right." />
+<link rel="canonical" href="https://dunnmaintenance.us/" />
+
+<!-- Favicon -->
+<link rel="icon" href="assets/dunn-logo.png" type="image/png" sizes="192x192" />
+<link rel="apple-touch-icon" href="assets/dunn-logo.png" />
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://dunnmaintenance.us/" />
+<meta property="og:title" content="Dunn Maintenance — Honest Work. Clean Results." />
+<meta property="og:description" content="Over 10 years of pressure washing and home maintenance in Longview, WA. Fair quotes, quick response, work done right." />
+<meta property="og:site_name" content="Dunn Maintenance" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Dunn Maintenance — Honest Work. Clean Results." />
+<meta name="twitter:description" content="Over 10 years of pressure washing and home maintenance in Longview, WA. Fair quotes, quick response, work done right." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+<style>
+  :root {
+    --sage: #3D5A3D;
+    --sage-dark: #2C4329;
+    --clay: #D97757;
+    --clay-dark: #B85F44;
+    --linen: #F5F1EA;
+    --bone: #EAE3D6;
+    --ink: #1F2421;
+    --ink-soft: #4A524C;
+    --paper: #FBF8F2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--linen);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .serif { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.02em; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Scroll progress bar ── */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--clay); z-index: 1001;
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 16px 6vw; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(245, 241, 234, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(31, 36, 33, 0.07);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 12px 6vw; }
+  .logo {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 9px; background: var(--sage);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--linen); flex-shrink: 0; transition: transform 0.4s;
+  }
+  .logo:hover .logo-mark { transform: rotate(-8deg); }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .nav-links { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+  .nav-links a { transition: color 0.2s; }
+  .nav-links a:hover { color: var(--clay); }
+  .nav-cta {
+    background: var(--ink); color: var(--linen);
+    padding: 10px 20px; border-radius: 50px;
+    font-size: 13px; font-weight: 600;
+    transition: all 0.3s; white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--clay); transform: translateY(-1px); }
+
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 6px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--ink); border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      position: fixed; top: 65px; left: 0; right: 0;
+      background: rgba(245, 241, 234, 0.98);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      flex-direction: column; gap: 0;
+      padding: 0;
+      border-bottom: 1px solid rgba(31,36,33,0.08);
+      /* Hide with opacity+visibility — no overflow bleed, no translate artifacts */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+      z-index: 99;
+    }
+    .nav-links.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .nav-links a {
+      display: block; padding: 16px 6vw;
+      font-size: 17px;
+      border-bottom: 1px solid rgba(31,36,33,0.06);
+    }
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh; padding: 120px 6vw 80px;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px;
+    align-items: center; position: relative; overflow: hidden;
+  }
+  .hero-bg-blob {
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 119, 87, 0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--bone); padding: 8px 16px; border-radius: 50px;
+    font-size: 13px; font-weight: 500; color: var(--sage-dark);
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--sage); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(42px, 6vw, 78px); line-height: 1.02;
+    letter-spacing: -0.03em; margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--clay);
+    font-family: 'Fraunces', serif; font-weight: 400;
+    position: relative;
+  }
+  .hero h1 em::after {
+    content: ''; position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 8px; background: rgba(217, 119, 87, 0.18); z-index: -1;
+    border-radius: 4px;
+  }
+  .reveal-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-right: 0.2em; }
+  .reveal-word > span { display: inline-block; }
+
+  .hero p.lead {
+    font-size: 19px; color: var(--ink-soft); max-width: 480px;
+    margin-bottom: 36px;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+  .btn {
+    padding: 16px 28px; border-radius: 50px; font-size: 15px;
+    font-weight: 600; cursor: pointer; border: none;
+    transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--ink); color: var(--linen); }
+  .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(31,36,33,0.2); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: var(--linen); }
+  .btn svg { transition: transform 0.3s; flex-shrink: 0; }
+  .btn:hover svg { transform: translateX(3px); }
+
+  .hero-trust {
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  .stars { color: var(--clay); letter-spacing: 2px; font-size: 16px; }
+  .trust-divider { width: 1px; height: 16px; background: rgba(31,36,33,0.15); }
+
+  .hero-visual { position: relative; height: 600px; }
+  .hero-img-main {
+    position: absolute; inset: 0;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(31, 36, 33, 0.18);
+    transform: rotate(2deg);
+  }
+  .hero-img-main img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-img-small {
+    position: absolute; bottom: -30px; left: -40px;
+    width: 200px; height: 240px;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(31, 36, 33, 0.2);
+    transform: rotate(-4deg);
+    border: 8px solid var(--paper);
+    z-index: 2;
+  }
+  .hero-img-small img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-badge {
+    position: absolute; top: 30px; right: -20px;
+    background: var(--sage); color: var(--linen);
+    padding: 18px 22px; border-radius: 12px;
+    transform: rotate(6deg);
+    box-shadow: 0 10px 30px rgba(60, 90, 61, 0.3);
+    font-family: 'Fraunces', serif; z-index: 2;
+  }
+  .hero-badge .big { font-size: 28px; font-weight: 600; line-height: 1; }
+  .hero-badge .small { font-size: 11px; opacity: 0.85; font-family: 'Inter', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 4px; }
+
+  @media (max-width: 968px) {
+    .hero { grid-template-columns: 1fr; padding: 110px 6vw 60px; }
+    .hero-visual { height: 400px; }
+    .hero-img-small { width: 140px; height: 170px; bottom: -20px; left: -10px; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding-top: 130px; }
+    .hero-ctas { flex-direction: column; }
+    .btn { justify-content: center; }
+  }
+
+  /* ── Sections ── */
+  section { padding: 100px 6vw; position: relative; }
+  .section-label {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--clay);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(34px, 4.5vw, 54px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 20px; max-width: 700px;
+  }
+  .section-title em { font-style: italic; color: var(--clay); }
+  .section-lead {
+    font-size: 18px; color: var(--ink-soft);
+    max-width: 580px; margin-bottom: 60px;
+  }
+
+  /* ── Discount Strip ── */
+  .discount-strip {
+    background: var(--clay); color: var(--linen);
+    padding: 18px 6vw; text-align: center;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.01em;
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .discount-strip strong { font-family: 'Fraunces', serif; font-weight: 600; font-size: 18px; }
+  .discount-strip .divider { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+  @media (max-width: 600px) { .discount-strip { font-size: 13px; gap: 12px; } .discount-strip .divider { display: none; } }
+
+  /* ── Services ── */
+  .services { background: var(--paper); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 20px;
+  }
+  .service-card {
+    background: var(--linen); padding: 36px 30px; border-radius: 20px;
+    border: 1px solid rgba(31, 36, 33, 0.06);
+    transition: all 0.4s cubic-bezier(.2,.8,.2,1);
+    position: relative; overflow: hidden;
+  }
+  /* Staggered layout — even cards sit slightly lower */
+  .service-card:nth-child(even) { transform: translateY(20px); }
+  .service-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 30px 60px rgba(31, 36, 33, 0.1);
+    border-color: var(--clay);
+  }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--bone);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px; color: var(--sage);
+    transition: all 0.3s;
+  }
+  .service-card:hover .service-icon {
+    background: var(--clay); color: var(--linen); transform: rotate(-6deg);
+  }
+  .service-card h3 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: 22px; margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .service-card p { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+  @media (max-width: 968px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .service-card:nth-child(even) { transform: none; }
+  }
+  @media (max-width: 560px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── About ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    gap: 80px; align-items: center;
+  }
+  .about-visual {
+    aspect-ratio: 4/5; border-radius: 24px; overflow: hidden;
+    position: relative;
+  }
+  .about-visual img { width: 100%; height: 100%; object-fit: cover; }
+  .about-quote {
+    position: absolute; bottom: 24px; left: 24px; right: 24px;
+    background: var(--linen); padding: 20px 24px; border-radius: 14px;
+    font-family: 'Fraunces', serif; font-size: 17px; font-style: italic;
+    line-height: 1.4; color: var(--ink);
+    box-shadow: 0 8px 24px rgba(31,36,33,0.12);
+  }
+  .about-text h2 { margin-bottom: 28px; }
+  .about-text p { font-size: 17px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.7; }
+  .about-stats { display: flex; gap: 40px; margin-top: 36px; padding-top: 36px; border-top: 1px solid rgba(31,36,33,0.1); flex-wrap: wrap; }
+  .stat .num { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 500; color: var(--sage); line-height: 1; }
+  .stat .label { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+  @media (max-width: 968px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ── Reviews ── */
+  .reviews { background: var(--sage); color: var(--linen); }
+  .reviews .section-label { color: var(--clay); }
+  .reviews .section-title { color: var(--linen); }
+  .reviews .section-title em { color: var(--clay); }
+  .reviews .section-lead { color: rgba(245, 241, 234, 0.75); }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+    max-width: 1100px;
+  }
+  .review-card-wide { grid-column: 1 / -1; }
+  .review-card-wide .review-text { font-size: 19px; }
+  .review-card {
+    background: var(--paper); color: var(--ink);
+    padding: 32px 28px; border-radius: 18px;
+    position: relative; transition: transform 0.4s;
+  }
+  .review-card:nth-child(1) { transform: rotate(-0.8deg); }
+  .review-card:nth-child(2) { transform: rotate(-1.2deg); }
+  .review-card:nth-child(3) { transform: rotate(0.8deg) translateY(12px); }
+  .review-card:nth-child(4) { transform: rotate(-0.5deg); }
+  .review-card:hover { transform: rotate(0) translateY(-4px) !important; }
+  .review-stars { color: var(--clay); letter-spacing: 2px; margin-bottom: 14px; font-size: 14px; }
+  .review-text {
+    font-family: 'Fraunces', serif; font-size: 17px; line-height: 1.55;
+    margin-bottom: 22px;
+  }
+  .review-author {
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 18px; border-top: 1px solid rgba(31, 36, 33, 0.08);
+  }
+  .review-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--bone); display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-weight: 600; color: var(--sage);
+    flex-shrink: 0;
+  }
+  .review-name { font-weight: 600; font-size: 14px; }
+  .review-when { font-size: 12px; color: var(--ink-soft); }
+  @media (max-width: 768px) {
+    .reviews-grid { grid-template-columns: 1fr; }
+    .review-card { transform: none !important; }
+  }
+
+  /* ── Process ── */
+  .process-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 40px; counter-reset: step;
+  }
+  .step { counter-increment: step; position: relative; }
+  .step-num {
+    font-family: 'Fraunces', serif; font-size: 64px; font-weight: 500;
+    color: var(--clay); line-height: 1; margin-bottom: 16px;
+    display: block;
+  }
+  .step-num::before { content: counter(step, decimal-leading-zero); }
+  .step h3 {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500;
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .step p { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+  @media (max-width: 768px) { .process-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ── Contact ── */
+  .contact { background: var(--paper); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr;
+    gap: 60px; align-items: start;
+  }
+  .contact-info h2 { margin-bottom: 24px; }
+  .contact-info p { font-size: 17px; color: var(--ink-soft); margin-bottom: 36px; line-height: 1.7; }
+  .contact-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px 0; border-bottom: 1px solid rgba(31,36,33,0.08);
+  }
+  .contact-item-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--bone); color: var(--sage);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .contact-item .label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-item .value { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; margin-top: 2px; }
+  .contact-item a.value { transition: color 0.2s; }
+  .contact-item a.value:hover { color: var(--clay); }
+
+  .contact-form {
+    background: var(--linen); padding: 40px;
+    border-radius: 20px; border: 1px solid rgba(31,36,33,0.06);
+    box-shadow: 0 4px 24px rgba(31,36,33,0.04);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 500;
+    margin-bottom: 8px; color: var(--ink-soft);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 14px 16px; border: 1.5px solid rgba(31,36,33,0.1);
+    border-radius: 10px; background: var(--paper);
+    font-family: inherit; font-size: 15px; color: var(--ink);
+    transition: border 0.2s, box-shadow 0.2s; outline: none;
+    -webkit-appearance: none;
+  }
+  .form-group select { cursor: pointer; }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(61, 90, 61, 0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-success {
+    background: var(--sage); color: var(--linen); padding: 14px 16px;
+    border-radius: 10px; margin-bottom: 16px; display: none;
+    font-size: 14px; line-height: 1.5;
+  }
+  .form-success.show { display: block; }
+  .btn-submit {
+    width: 100%; justify-content: center; margin-top: 4px;
+    font-size: 16px; padding: 18px 28px;
+  }
+  @media (max-width: 968px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+  @media (max-width: 560px) { .contact-form { padding: 28px 20px; } }
+
+  /* ── Footer ── */
+  footer { background: var(--ink); color: var(--linen); padding: 60px 6vw 30px; }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+  }
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 600; margin-bottom: 14px; }
+  .footer-logo span { color: var(--clay); }
+  .footer-tag { font-size: 14px; opacity: 0.7; max-width: 320px; line-height: 1.6; }
+  footer h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; opacity: 0.5; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: 10px; font-size: 14px; line-height: 1.5; }
+  footer li a { opacity: 0.75; transition: opacity 0.2s, color 0.2s; }
+  footer li a:hover { opacity: 1; color: var(--clay); }
+  .footer-bottom {
+    padding-top: 30px; border-top: 1px solid rgba(245,241,234,0.1);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; opacity: 0.55;
+  }
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ── Hero Animations (CSS only — no CDN, always reliable) ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes wordReveal {
+    from { transform: translateY(110%); }
+    to   { transform: translateY(0); }
+  }
+
+  .reveal-word { overflow: hidden; }
+  .reveal-word > span { display: inline-block; animation: wordReveal 0.8s cubic-bezier(.16,1,.3,1) both; }
+  .reveal-word:nth-child(1) > span { animation-delay: 0.15s; }
+  .reveal-word:nth-child(2) > span { animation-delay: 0.25s; }
+  .reveal-word:nth-child(3) > span { animation-delay: 0.35s; }
+  .reveal-word:nth-child(4) > span { animation-delay: 0.45s; }
+
+  .hero-eyebrow  { animation: fadeUp 0.7s ease-out 0.4s  both; }
+  .hero h1       { animation: fadeUp 0.7s ease-out 0.3s  both; }
+  .hero .lead    { animation: fadeUp 0.7s ease-out 0.55s both; }
+  .hero-ctas     { animation: fadeUp 0.7s ease-out 0.7s  both; }
+  .hero-trust    { animation: fadeUp 0.7s ease-out 0.85s both; }
+  .hero-visual   { animation: fadeUp 0.9s ease-out 0.45s both; }
+
+  /* ── Scroll Animations (Intersection Observer — no JS library needed) ── */
+  .scroll-anim {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .scroll-anim.in-view { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .reveal-word > span { animation: none; transform: none; }
+    .hero-eyebrow, .hero h1, .hero .lead, .hero-ctas, .hero-trust, .hero-visual { animation: none; }
+    .scroll-anim { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progress" role="progressbar" aria-label="Page scroll progress"></div>
+
+<!-- ── Navigation ── -->
+<nav id="mainNav" aria-label="Main navigation">
+  <a href="#hero" class="logo" aria-label="Dunn Maintenance — home">
+    <span class="logo-mark" aria-hidden="true">
+      <!-- Dunn "D" mark — two arcs mirroring the logo -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 4 L7 18 Q7 22 4 22"/>
+        <path d="M17 4 L17 18 Q17 22 14 22"/>
+      </svg>
+    </span>
+    <span>Dunn<span style="color:var(--clay);">.</span> Maintenance</span>
+  </a>
+
+  <div class="nav-links" id="navLinks" role="list">
+    <a href="#services" role="listitem">Services</a>
+    <a href="#about" role="listitem">About</a>
+    <a href="#reviews" role="listitem">Reviews</a>
+    <a href="#contact" role="listitem">Contact</a>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:12px;">
+    <a href="tel:3608242507" class="nav-cta" aria-label="Call us at (360) 824-2507">(360) 824-2507</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero" id="hero" aria-labelledby="heroHeading">
+  <div class="hero-bg-blob" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">10+ years &middot; Longview, WA &middot; Pacific Northwest</div>
+    <h1 id="heroHeading">
+      <span class="reveal-word"><span>Honest</span></span>
+      <span class="reveal-word"><span>work.</span></span><br>
+      <span class="reveal-word"><span><em>Clean</em></span></span>
+      <span class="reveal-word"><span>results.</span></span>
+    </h1>
+    <p class="lead">Pressure washing and home maintenance done right — by people who show up on time, quote fair, and don't leave until you're happy with the work.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">
+        Get a free quote
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="tel:3608242507" class="btn btn-secondary" aria-label="Call (360) 824-2507">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call (360) 824-2507
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div><span class="stars" aria-label="5 stars">★★★★★</span> <strong>4.8</strong> &middot; 10 reviews</div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div>HomeAdvisor Top Rated</div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div>Free estimates</div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-img-main">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Clean home exterior after pressure washing" loading="eager" />
+    </div>
+    <div class="hero-img-small">
+      <img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&q=80" alt="Pressure washing in action" loading="eager" />
+    </div>
+    <div class="hero-badge">
+      <div class="big">10+ yrs</div>
+      <div class="small">Doing it right</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Bundle Discount Strip ── -->
+<div class="discount-strip" role="banner">
+  <strong>Bundle &amp; Save</strong>
+  <span>20% off four services</span>
+  <span class="divider" aria-hidden="true"></span>
+  <span>15% off three</span>
+  <span class="divider" aria-hidden="true"></span>
+  <span>10% off two</span>
+</div>
+
+<!-- ── Services ── -->
+<section class="services" id="services" aria-labelledby="servicesHeading">
+  <div class="section-label scroll-anim">What we specialize in</div>
+  <h2 class="section-title scroll-anim" id="servicesHeading">Eight things we do <em>better than most.</em></h2>
+  <p class="section-lead scroll-anim">Whether you're prepping to sell, doing spring maintenance, or just tired of looking at the moss on your driveway — we handle it.</p>
+
+  <div class="services-grid">
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5c-3.5 4-6 7.2-6 10.2a6 6 0 0 0 12 0c0-3-2.5-6.2-6-10.2z" fill="currentColor" stroke="none"/><path d="M16 10l2.5-2.5M18 13l2.5-.7M18 16.5l2 .8" stroke="currentColor" stroke-width="1.4" opacity="0.5"/></svg>
+      </div>
+      <h3>Power Washing</h3>
+      <p>Driveways, sidewalks, patios — years of oil, moss, and grime lifted clean. Concrete looks years younger.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M7 6V4M17 6V4"/></svg>
+      </div>
+      <h3>House Washing</h3>
+      <p>Soft-wash for vinyl, wood, brick, and stucco. Mold and mildew gone — no stripped paint, no damage.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 12h18M12 4v16"/></svg>
+      </div>
+      <h3>Window Cleaning</h3>
+      <p>Inside, outside, screens included. Streak-free glass that makes the whole house feel new again.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9M5 10v10h14V10"/><path d="M9 22V14h6v8"/></svg>
+      </div>
+      <h3>Roof &amp; Gutter Cleaning</h3>
+      <p>Safe roof treatment for moss and algae, plus full gutter cleaning so winter rain goes where it should.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 7c0 8 4 12 8 13 4-1 8-5 8-13"/><path d="M9 7V4M15 7V4"/></svg>
+      </div>
+      <h3>Gutter Guards</h3>
+      <p>Install gutter guards once and stop pulling leaves out of your gutters every fall for the rest of your life.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="1"/><path d="M3 10h18M3 14h18M7 6v14M12 6v14M17 6v14"/></svg>
+      </div>
+      <h3>Deck &amp; Fence Washing</h3>
+      <p>Cedar, pressure-treated, vinyl — we get the green off, restore the color, and make it presentable again.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22V12M12 12c0-3 2-6 5-6 0 3-2 6-5 6zM12 12c0-3-2-6-5-6 0 3 2 6 5 6z"/></svg>
+      </div>
+      <h3>Flower Bed Rehab</h3>
+      <p>Beds reshaped, weeded, fresh bark or mulch laid in. Instant curb appeal without replacing a single plant.</p>
+    </div>
+    <div class="service-card scroll-anim">
+      <div class="service-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      </div>
+      <h3>Full Property Cleaning</h3>
+      <p>Full-property care — wash, weed, gutter, window, the whole package. We hang Christmas lights too.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about" aria-labelledby="aboutHeading">
+  <div class="about-grid">
+    <div class="about-visual scroll-anim">
+      <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=800&q=80" alt="Jacob Dunn working on a job site" loading="lazy" />
+      <div class="about-quote">&ldquo;We don&rsquo;t leave until you&rsquo;ve looked at the work and you&rsquo;re happy with it.&rdquo;</div>
+    </div>
+    <div class="about-text">
+      <div class="section-label scroll-anim">About Dunn Maintenance</div>
+      <h2 class="section-title scroll-anim" id="aboutHeading">Run by <em>Jacob.</em> Done the right way.</h2>
+      <p class="scroll-anim">With over <strong>10 years of experience</strong>, Dunn Maintenance is committed to excellence in every part of the business. Jacob holds the crew to a standard built on fairness, honesty, and personal responsibility.</p>
+      <p class="scroll-anim">Accurate knowledge of the trade combined with real ability — that's what makes the difference. Above all, we watch out for our customers' interests and make their concerns the basis of every job. No upsells. No surprise charges. Just clean work and a fair price.</p>
+      <div class="about-stats scroll-anim">
+        <div class="stat"><div class="num">10+</div><div class="label">Years experience</div></div>
+        <div class="stat"><div class="num">4.8<span style="font-size:28px; color:var(--clay);">★</span></div><div class="label">HomeAdvisor Top Rated</div></div>
+        <div class="stat"><div class="num" style="font-size:28px; line-height:1.4;">PNW</div><div class="label">Longview, WA &amp; surrounding</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Reviews ── -->
+<section class="reviews" id="reviews" aria-labelledby="reviewsHeading">
+  <div class="section-label scroll-anim">What people say</div>
+  <h2 class="section-title scroll-anim" id="reviewsHeading">Real reviews. <em>Real neighbors.</em></h2>
+  <p class="section-lead scroll-anim">Pulled straight from our Google profile. We're grateful for every one of them.</p>
+
+  <div class="reviews-grid">
+    <!-- Featured wide review -->
+    <div class="review-card review-card-wide scroll-anim">
+      <div class="review-stars" aria-label="5 stars">★★★★★</div>
+      <div class="review-text">&ldquo;Quick to respond to my initial inquiry. I received an extremely reasonable estimate the same day — and the following day, my entire driveway and gutters were pressure washed. Dramatic improvement, job done very well. Excellent follow-up and friendly customer service. Highly recommend! I will always call Dunn Maintenance for my pressure washing needs.&rdquo;</div>
+      <div class="review-author">
+        <div class="review-avatar" aria-hidden="true">A</div>
+        <div>
+          <div class="review-name">Andrew Hamilton</div>
+          <div class="review-when">Kelso City Manager</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card scroll-anim">
+      <div class="review-stars" aria-label="5 stars">★★★★★</div>
+      <div class="review-text">&ldquo;Jacob and his team were great! They went above and beyond, and with reasonable prices. I will use them again.&rdquo;</div>
+      <div class="review-author">
+        <div class="review-avatar" aria-hidden="true">N</div>
+        <div>
+          <div class="review-name">Noelle Hamilton</div>
+          <div class="review-when">2 months ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card scroll-anim">
+      <div class="review-stars" aria-label="5 stars">★★★★★</div>
+      <div class="review-text">&ldquo;Jacob and his co-worker were amazing! They put up my Christmas lights and they are perfectly straight and look great! Super easy to work with. Thank you guys so much!&rdquo;</div>
+      <div class="review-author">
+        <div class="review-avatar" aria-hidden="true">T</div>
+        <div>
+          <div class="review-name">Trina Hunter</div>
+          <div class="review-when">5 months ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card scroll-anim" style="grid-column: 1 / -1;">
+      <div class="review-stars" aria-label="5 stars">★★★★★</div>
+      <div class="review-text">&ldquo;Very quick to respond, honest and up front on pricing — his quotes are fair. He did exactly what we needed and didn't leave until we inspected the work. Highly recommend.&rdquo;</div>
+      <div class="review-author">
+        <div class="review-avatar" aria-hidden="true">D</div>
+        <div>
+          <div class="review-name">Dave P.</div>
+          <div class="review-when">9 months ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ── -->
+<section id="process" aria-labelledby="processHeading">
+  <div class="section-label scroll-anim">How it works</div>
+  <h2 class="section-title scroll-anim" id="processHeading">Three steps. <em>No surprises.</em></h2>
+  <p class="section-lead scroll-anim">From the first phone call to the final walk-through, here's exactly how this goes.</p>
+
+  <div class="process-grid">
+    <div class="step scroll-anim">
+      <span class="step-num" aria-hidden="true"></span>
+      <h3>Call or message us</h3>
+      <p>Tell us what needs doing. We'll give you a fair quote — usually same-day, no run-around, no pressure.</p>
+    </div>
+    <div class="step scroll-anim">
+      <span class="step-num" aria-hidden="true"></span>
+      <h3>We show up on time</h3>
+      <p>If we said Tuesday at 9, we're there Tuesday at 9. Crew, gear, and full respect for your property.</p>
+    </div>
+    <div class="step scroll-anim">
+      <span class="step-num" aria-hidden="true"></span>
+      <h3>You inspect the work</h3>
+      <p>We walk it with you before we pack up. If something isn't right, we fix it. Then we're done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="contact" id="contact" aria-labelledby="contactHeading">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label scroll-anim">Get in touch</div>
+      <h2 class="section-title scroll-anim" id="contactHeading">Let's get you a <em>quote.</em></h2>
+      <p class="scroll-anim">Drop us a line below or call directly — we usually respond same day.</p>
+
+      <div class="contact-item scroll-anim">
+        <div class="contact-item-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="label">Phone</div>
+          <a href="tel:3608242507" class="value">(360) 824-2507</a>
+        </div>
+      </div>
+      <div class="contact-item scroll-anim">
+        <div class="contact-item-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </div>
+        <div>
+          <div class="label">Email</div>
+          <a href="mailto:Jacob@dunnmaintenance.us" class="value">Jacob@dunnmaintenance.us</a>
+        </div>
+      </div>
+      <div class="contact-item scroll-anim">
+        <div class="contact-item-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="label">Location</div>
+          <a href="https://www.google.com/maps/search/?api=1&query=22+Country+Club+Dr+Longview+WA+98632" target="_blank" rel="noopener noreferrer" class="value">22 Country Club Dr.<br>Longview, WA 98632</a>
+        </div>
+      </div>
+
+      <!-- Google Maps CTA -->
+      <div class="scroll-anim" style="margin-top: 4px; margin-bottom: 8px;">
+        <a href="https://www.google.com/maps/search/?api=1&query=Dunn+Maintenance+22+Country+Club+Dr+Longview+WA+98632"
+           target="_blank" rel="noopener noreferrer"
+           style="display:inline-flex; align-items:center; gap:10px;
+                  background:var(--sage); color:var(--linen);
+                  padding:13px 22px; border-radius:50px;
+                  font-size:14px; font-weight:600;
+                  text-decoration:none; transition:all 0.3s;"
+           onmouseover="this.style.background='var(--sage-dark)';this.style.transform='translateY(-2px)'"
+           onmouseout="this.style.background='var(--sage)';this.style.transform='none'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Get Directions on Google Maps
+        </a>
+      </div>
+
+      <div class="contact-item scroll-anim">
+        <div class="contact-item-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="label">Hours</div>
+          <div class="value" style="font-size:17px; line-height:1.4;">Mon – Sat &middot; 8 AM – 6 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote Form — submits via mailto so it works immediately, no backend required -->
+    <form class="contact-form scroll-anim" id="quoteForm" novalidate>
+      <div class="form-success" id="formSuccess" role="alert">
+        ✓ &nbsp;Thanks! Your quote request has been sent to Jacob. He'll be in touch shortly.
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your name *</label>
+          <input type="text" id="name" name="name" required placeholder="First and last" autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone *</label>
+          <input type="tel" id="phone" name="phone" required placeholder="(360) 555-0123" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="service">What do you need? *</label>
+        <select id="service" name="service" required>
+          <option value="" disabled selected>Select a service…</option>
+          <option>Power washing</option>
+          <option>House washing</option>
+          <option>Window cleaning</option>
+          <option>Roof &amp; gutter cleaning</option>
+          <option>Gutter guards</option>
+          <option>Deck &amp; fence washing</option>
+          <option>Flower bed rehab</option>
+          <option>Full property cleaning</option>
+          <option>Multiple services (bundle discount)</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell us a bit more</label>
+        <textarea id="message" name="message" placeholder="Square footage, timing, anything we should know…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-submit">
+        Request my free quote
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Dunn<span>.</span> Maintenance</div>
+      <p class="footer-tag">Honest work. Clean results. Proudly serving Longview, WA and the Pacific Northwest for over 10 years.</p>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Power washing</a></li>
+        <li><a href="#services">House washing</a></li>
+        <li><a href="#services">Window cleaning</a></li>
+        <li><a href="#services">Roof &amp; gutters</a></li>
+        <li><a href="#services">Gutter guards</a></li>
+        <li><a href="#services">Decks &amp; fences</a></li>
+        <li><a href="#services">Flower bed rehab</a></li>
+        <li><a href="#services">Full property cleaning</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:3608242507">(360) 824-2507</a></li>
+        <li><a href="mailto:Jacob@dunnmaintenance.us">Jacob@dunnmaintenance.us</a></li>
+        <li>22 Country Club Dr.<br>Longview, WA 98632</li>
+        <li style="opacity:0.7;">Mon – Sat · 8 AM – 6 PM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; <span id="copyrightYear"></span> Dunn Maintenance. All rights reserved.</div>
+    <div>HomeAdvisor Top Rated &middot; Insured &middot; 10+ Years Serving the PNW</div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════════════ -->
+<script>
+  /* ── Copyright year ── */
+  document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+  /* ── Scroll progress bar ── */
+  const progressBar = document.getElementById('progress');
+  const mainNav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progressBar.style.width = pct + '%';
+    mainNav.classList.toggle('scrolled', h.scrollTop > 40);
+  }, { passive: true });
+
+  /* ── Mobile hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+  /* Close mobile menu when a nav link is clicked */
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ── Quote form — mailto handler (works immediately, no backend needed) ── */
+  const form      = document.getElementById('quoteForm');
+  const successEl = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name    = document.getElementById('name').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value.trim();
+
+    /* Basic validation */
+    if (!name || !phone || !service) {
+      alert('Please fill in your name, phone, and the service you need.');
+      return;
+    }
+
+    /* Build mailto — opens Jacob's email client with everything pre-filled */
+    const subject = encodeURIComponent('Quote Request: ' + service + ' — ' + name);
+    const body = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'Phone: ' + phone + '\n' +
+      (email ? 'Email: ' + email + '\n' : '') +
+      'Service: ' + service + '\n\n' +
+      (message ? 'Details:\n' + message : '(No additional details provided)')
+    );
+    window.location.href = 'mailto:Jacob@dunnmaintenance.us?subject=' + subject + '&body=' + body;
+
+    /* Show confirmation and reset */
+    successEl.classList.add('show');
+    form.reset();
+    setTimeout(() => successEl.classList.remove('show'), 8000);
+  });
+
+  /* ── Scroll Animations — Intersection Observer (no CDN required) ── */
+  (function () {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.scroll-anim').forEach(el => el.classList.add('in-view'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.scroll-anim').forEach((el, i) => {
+      const siblings = el.parentElement
+        ? Array.from(el.parentElement.querySelectorAll(':scope > .scroll-anim'))
+        : [];
+      const idx = siblings.indexOf(el);
+      if (idx > 0) el.style.transitionDelay = (idx * 0.07) + 's';
+      io.observe(el);
+    });
+  })();
+
+  /* ── GSAP progressive enhancement — parallax only (purely decorative) ── */
+  window.addEventListener('load', () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.fromTo('.hero-img-main img', { scale: 1 }, { scale: 1.07, duration: 14, ease: 'none' });
+    gsap.to('.hero-img-main', {
+      y: -55,
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+    });
+  });
+</script>
+
+</body>
+</html>
