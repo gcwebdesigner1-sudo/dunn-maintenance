@@ -927,18 +927,25 @@
         </div>
       </div>
 
-      <div class="scroll-anim" style="margin-top: 4px; margin-bottom: 8px;">
+      <div class="scroll-anim" style="margin-top: 16px; margin-bottom: 8px;">
         <a href="https://www.google.com/maps/search/?api=1&query=Dunn+Maintenance+22+Country+Club+Dr+Longview+WA+98632"
            target="_blank" rel="noopener noreferrer"
-           style="display:inline-flex; align-items:center; gap:10px;
+           style="display:flex; align-items:center; justify-content:space-between; gap:16px;
                   background:var(--sage); color:var(--linen);
-                  padding:13px 22px; border-radius:50px;
-                  font-size:14px; font-weight:600;
-                  text-decoration:none; transition:all 0.3s;"
-           onmouseover="this.style.background='var(--sage-dark)';this.style.transform='translateY(-2px)'"
-           onmouseout="this.style.background='var(--sage)';this.style.transform='none'">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Get Directions on Google Maps
+                  padding:20px 28px; border-radius:16px;
+                  font-size:17px; font-weight:600;
+                  text-decoration:none; transition:all 0.3s;
+                  box-shadow: 0 4px 20px rgba(44,67,41,0.25);"
+           onmouseover="this.style.background='var(--sage-dark)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 30px rgba(44,67,41,0.35)'"
+           onmouseout="this.style.background='var(--sage)';this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(44,67,41,0.25)'">
+          <span style="display:flex; align-items:center; gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Open in Google Maps
+          </span>
+          <span style="display:flex; align-items:center; gap:6px; opacity:0.85; font-size:14px; font-weight:500;">
+            22 Country Club Dr · Longview, WA
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
         </a>
       </div>
 
