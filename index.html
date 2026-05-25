@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://dunnmaintenance.us/" />
 
 <!-- Favicon -->
-<link rel="icon" href="assets/dunn-logo.png" type="image/png" sizes="192x192" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/dunn-logo.png" />
 
 <!-- Open Graph / Social Sharing -->
@@ -21,12 +21,17 @@
 <meta name="twitter:title" content="Dunn Maintenance — Honest Work. Clean Results." />
 <meta name="twitter:description" content="Over 10 years of pressure washing and home maintenance in Longview, WA. Fair quotes, quick response, work done right." />
 
+<!-- Schema Markup -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Dunn Maintenance","telephone":"+13608242507","email":"Jacob@dunnmaintenance.us","url":"https://dunnmaintenance.us","address":{"@type":"PostalAddress","streetAddress":"22 Country Club Dr","addressLocality":"Longview","addressRegion":"WA","postalCode":"98632"},"openingHours":"Mo-Sa 08:00-18:00","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"10"},"description":"Over 10 years of pressure washing and home maintenance in Longview, WA and the Pacific Northwest.","priceRange":"$$"}
+</script>
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- GSAP -->
+<!-- GSAP — progressive enhancement only (hero parallax) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
@@ -41,6 +46,7 @@
     --ink: #1F2421;
     --ink-soft: #4A524C;
     --paper: #FBF8F2;
+    --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -51,9 +57,103 @@
     line-height: 1.6;
     overflow-x: hidden;
   }
-  .serif { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.02em; }
+  /* Prevent scroll while intro plays */
+  body:not(.ready) { overflow: hidden; }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
+
+  /* ══════════════════════════════════════════════
+     INTRO ANIMATION
+     ══════════════════════════════════════════════ */
+  #intro {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #intro.is-exiting {
+    animation: introSlideUp 0.65s cubic-bezier(0.76, 0, 0.24, 1) 0.05s both;
+  }
+  @keyframes introSlideUp {
+    to { transform: translateY(-100%); }
+  }
+  .intro-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .intro-icon-wrap {
+    width: 80px;
+    height: 80px;
+  }
+  .intro-icon-svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Outer ripple ring draws itself */
+  .id-ring {
+    stroke-dasharray: 150.8;
+    stroke-dashoffset: 150.8;
+    animation: idRingDraw 0.75s cubic-bezier(0.6, 0, 0.4, 1) 0.25s forwards;
+  }
+  @keyframes idRingDraw { to { stroke-dashoffset: 0; } }
+
+  /* Inner ring draws itself */
+  .id-ring-2 {
+    stroke-dasharray: 87.96;
+    stroke-dashoffset: 87.96;
+    animation: idRing2Draw 0.55s cubic-bezier(0.6, 0, 0.4, 1) 0.45s forwards;
+  }
+  @keyframes idRing2Draw { to { stroke-dashoffset: 0; } }
+
+  /* Water drop pops in with spring overshoot */
+  .id-drop {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0);
+    animation: idDropIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.88s forwards;
+  }
+  @keyframes idDropIn { to { transform: scale(1); } }
+
+  /* Wordmark slides up */
+  .intro-wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .intro-name {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--linen);
+    transform: translateY(40px);
+    opacity: 0;
+    animation: introWordIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  }
+  .intro-dot { color: var(--clay); }
+  @keyframes introWordIn {
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .intro-sub {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 234, 0.5);
+    opacity: 0;
+    animation: introFadeIn 0.5s ease-out 1.1s forwards;
+  }
+  @keyframes introFadeIn { to { opacity: 1; } }
 
   /* ── Scroll progress bar ── */
   .scroll-progress {
@@ -77,67 +177,69 @@
   .logo {
     font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
     letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
   }
   .logo-mark {
-    width: 34px; height: 34px; border-radius: 9px; background: var(--sage);
+    width: 34px; height: 34px; border-radius: 9px;
     display: inline-flex; align-items: center; justify-content: center;
-    color: var(--linen); flex-shrink: 0; transition: transform 0.4s;
+    flex-shrink: 0; transition: transform 0.4s; overflow: hidden;
   }
-  .logo:hover .logo-mark { transform: rotate(-8deg); }
-  .logo-mark svg { width: 20px; height: 20px; }
+  .logo:hover .logo-mark { transform: rotate(-8deg) scale(1.05); }
   .nav-links { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
   .nav-links a { transition: color 0.2s; }
   .nav-links a:hover { color: var(--clay); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .nav-cta {
     background: var(--ink); color: var(--linen);
     padding: 10px 20px; border-radius: 50px;
     font-size: 13px; font-weight: 600;
     transition: all 0.3s; white-space: nowrap;
+    min-height: 44px;
+    display: inline-flex; align-items: center;
   }
   .nav-cta:hover { background: var(--clay); transform: translateY(-1px); }
 
   /* Hamburger */
   .hamburger {
     display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; padding: 6px; background: none; border: none;
+    cursor: pointer; padding: 0; background: none; border: none;
+    border-radius: 8px; transition: background 0.2s;
+    min-width: 44px; min-height: 44px;
+    align-items: center; justify-content: center;
   }
+  .hamburger:hover { background: var(--bone); }
   .hamburger span {
     display: block; width: 22px; height: 2px;
     background: var(--ink); border-radius: 2px;
     transition: all 0.3s ease;
   }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   @media (max-width: 768px) {
     .hamburger { display: flex; }
+    .logo { font-size: 18px; gap: 8px; }
+    .logo-mark { width: 30px; height: 30px; }
+    .nav-cta { display: none; }
     .nav-links {
-      position: fixed; top: 65px; left: 0; right: 0;
+      position: fixed; top: 63px; left: 0; right: 0;
       background: rgba(245, 241, 234, 0.98);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      flex-direction: column; gap: 0;
-      padding: 0;
+      flex-direction: column; gap: 0; padding: 0;
       border-bottom: 1px solid rgba(31,36,33,0.08);
-      /* Hide with opacity+visibility — no overflow bleed, no translate artifacts */
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      opacity: 0; visibility: hidden; pointer-events: none;
       transform: translateY(-8px);
-      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s var(--ease-spring);
       z-index: 99;
     }
     .nav-links.open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateY(0);
+      opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
     }
     .nav-links a {
       display: block; padding: 16px 6vw;
-      font-size: 17px;
-      border-bottom: 1px solid rgba(31,36,33,0.06);
+      font-size: 17px; border-bottom: 1px solid rgba(31,36,33,0.06);
     }
   }
 
@@ -179,8 +281,7 @@
     height: 8px; background: rgba(217, 119, 87, 0.18); z-index: -1;
     border-radius: 4px;
   }
-  .reveal-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-right: 0.2em; }
-  .reveal-word > span { display: inline-block; }
+  .reveal-word { display: inline-block; vertical-align: bottom; padding-right: 0.2em; }
 
   .hero p.lead {
     font-size: 19px; color: var(--ink-soft); max-width: 480px;
@@ -271,8 +372,7 @@
   .discount-strip {
     background: var(--clay); color: var(--linen);
     padding: 18px 6vw; text-align: center;
-    font-size: 14px; font-weight: 500;
-    letter-spacing: 0.01em;
+    font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
     display: flex; align-items: center; justify-content: center; gap: 24px;
     flex-wrap: wrap;
   }
@@ -292,7 +392,6 @@
     transition: all 0.4s cubic-bezier(.2,.8,.2,1);
     position: relative; overflow: hidden;
   }
-  /* Staggered layout — even cards sit slightly lower */
   .service-card:nth-child(even) { transform: translateY(20px); }
   .service-card:hover {
     transform: translateY(-8px) !important;
@@ -318,9 +417,7 @@
     .services-grid { grid-template-columns: repeat(2, 1fr); }
     .service-card:nth-child(even) { transform: none; }
   }
-  @media (max-width: 560px) {
-    .services-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
 
   /* ── About ── */
   .about-grid {
@@ -391,6 +488,7 @@
   }
 
   /* ── Process ── */
+  .process { background: var(--bone); }
   .process-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 40px; counter-reset: step;
@@ -430,7 +528,6 @@
   .contact-item .value { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; margin-top: 2px; }
   .contact-item a.value { transition: color 0.2s; }
   .contact-item a.value:hover { color: var(--clay); }
-
   .contact-form {
     background: var(--linen); padding: 40px;
     border-radius: 20px; border: 1px solid rgba(31,36,33,0.06);
@@ -494,55 +591,97 @@
   }
   @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
 
-  /* ── Hero Animations (CSS only — no CDN, always reliable) ── */
+  /* ══════════════════════════════════════════════
+     HERO ANIMATIONS — fire after intro exits
+     ══════════════════════════════════════════════ */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: none; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
   @keyframes wordReveal {
     from { transform: translateY(110%); }
     to   { transform: translateY(0); }
   }
 
+  /* Hero content hidden until body.ready */
+  .hero-eyebrow, .hero .lead, .hero-ctas, .hero-trust, .hero-visual { opacity: 0; }
   .reveal-word { overflow: hidden; }
-  .reveal-word > span { display: inline-block; animation: wordReveal 0.8s cubic-bezier(.16,1,.3,1) both; }
-  .reveal-word:nth-child(1) > span { animation-delay: 0.15s; }
-  .reveal-word:nth-child(2) > span { animation-delay: 0.25s; }
-  .reveal-word:nth-child(3) > span { animation-delay: 0.35s; }
-  .reveal-word:nth-child(4) > span { animation-delay: 0.45s; }
+  .reveal-word > span { display: inline-block; transform: translateY(110%); }
 
-  .hero-eyebrow  { animation: fadeUp 0.7s ease-out 0.4s  both; }
-  .hero h1       { animation: fadeUp 0.7s ease-out 0.3s  both; }
-  .hero .lead    { animation: fadeUp 0.7s ease-out 0.55s both; }
-  .hero-ctas     { animation: fadeUp 0.7s ease-out 0.7s  both; }
-  .hero-trust    { animation: fadeUp 0.7s ease-out 0.85s both; }
-  .hero-visual   { animation: fadeUp 0.9s ease-out 0.45s both; }
+  body.ready .hero-eyebrow { animation: fadeUp 0.65s var(--ease-spring) 0.05s both; }
+  body.ready .hero h1      { animation: fadeIn 0.4s ease-out 0.12s both; }
+  body.ready .reveal-word > span { animation: wordReveal 0.8s cubic-bezier(.16,1,.3,1) both; }
+  body.ready .reveal-word:nth-child(1) > span { animation-delay: 0.18s; }
+  body.ready .reveal-word:nth-child(2) > span { animation-delay: 0.28s; }
+  body.ready .reveal-word:nth-child(3) > span { animation-delay: 0.38s; }
+  body.ready .reveal-word:nth-child(4) > span { animation-delay: 0.48s; }
+  body.ready .hero .lead   { animation: fadeUp 0.65s var(--ease-spring) 0.55s both; }
+  body.ready .hero-ctas    { animation: fadeUp 0.65s var(--ease-spring) 0.70s both; }
+  body.ready .hero-trust   { animation: fadeUp 0.65s var(--ease-spring) 0.85s both; }
+  body.ready .hero-visual  { animation: fadeUp 0.9s  var(--ease-spring) 0.25s both; }
 
-  /* ── Scroll Animations (Intersection Observer — no JS library needed) ── */
+  /* ── Scroll Animations — Intersection Observer ── */
   .scroll-anim {
     opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(24px);
+    transition: opacity 0.65s var(--ease-spring), transform 0.65s var(--ease-spring);
   }
   .scroll-anim.in-view { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     .reveal-word > span { animation: none; transform: none; }
-    .hero-eyebrow, .hero h1, .hero .lead, .hero-ctas, .hero-trust, .hero-visual { animation: none; }
+    .hero-eyebrow, .hero .lead, .hero-ctas, .hero-trust, .hero-visual { opacity: 1; }
+    body.ready .hero-eyebrow, body.ready .hero h1, body.ready .reveal-word > span,
+    body.ready .hero .lead, body.ready .hero-ctas, body.ready .hero-trust,
+    body.ready .hero-visual { animation: none; opacity: 1; transform: none; }
     .scroll-anim { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 </style>
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════
+     INTRO ANIMATION OVERLAY
+     ══════════════════════════════════════════════ -->
+<div id="intro" aria-hidden="true" role="presentation">
+  <div class="intro-inner">
+    <div class="intro-icon-wrap">
+      <svg class="intro-icon-svg" viewBox="0 0 64 64" aria-hidden="true">
+        <!-- Outer ripple ring draws itself -->
+        <circle class="id-ring" cx="32" cy="32" r="24"
+          fill="none" stroke="#D97757" stroke-width="2"
+          stroke-dasharray="150.8" stroke-dashoffset="150.8"
+          stroke-linecap="round"/>
+        <!-- Inner ring fades in -->
+        <circle class="id-ring-2" cx="32" cy="32" r="14"
+          fill="none" stroke="rgba(217,119,87,0.35)" stroke-width="1.5"
+          stroke-dasharray="87.96" stroke-dashoffset="87.96"
+          stroke-linecap="round"/>
+        <!-- Water drop pops in with spring -->
+        <path class="id-drop"
+          d="M32 18 C32 18,22 26,22 34 a10 10 0 0 0 20 0 C42 26,32 18,32 18Z"
+          fill="#D97757"/>
+      </svg>
+    </div>
+    <div class="intro-wordmark">
+      <span class="intro-name">Dunn<span class="intro-dot">.</span> Maintenance</span>
+      <span class="intro-sub">Longview, WA &middot; Since 2014</span>
+    </div>
+  </div>
+</div>
+
 <div class="scroll-progress" id="progress" role="progressbar" aria-label="Page scroll progress"></div>
 
 <!-- ── Navigation ── -->
 <nav id="mainNav" aria-label="Main navigation">
   <a href="#hero" class="logo" aria-label="Dunn Maintenance — home">
-    <span class="logo-mark" style="background:transparent; padding:0; width:38px; height:38px;" aria-hidden="true">
-      <img src="assets/dunn-logo.png" alt="" width="38" height="38" style="border-radius:8px; object-fit:cover;" />
+    <span class="logo-mark" aria-hidden="true">
+      <img src="assets/dunn-logo.png" alt="" width="30" height="30" style="width:100%;height:100%;object-fit:cover;" />
     </span>
     <span>Dunn<span style="color:var(--clay);">.</span> Maintenance</span>
   </a>
@@ -554,7 +693,7 @@
     <a href="#contact" role="listitem">Contact</a>
   </div>
 
-  <div style="display:flex; align-items:center; gap:12px;">
+  <div class="nav-right">
     <a href="tel:3608242507" class="nav-cta" aria-label="Call us at (360) 824-2507">(360) 824-2507</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -711,7 +850,6 @@
   <p class="section-lead scroll-anim">Pulled straight from our Google profile. We're grateful for every one of them.</p>
 
   <div class="reviews-grid">
-    <!-- Featured wide review -->
     <div class="review-card review-card-wide scroll-anim">
       <div class="review-stars" aria-label="5 stars">★★★★★</div>
       <div class="review-text">&ldquo;Quick to respond to my initial inquiry. I received an extremely reasonable estimate the same day — and the following day, my entire driveway and gutters were pressure washed. Dramatic improvement, job done very well. Excellent follow-up and friendly customer service. Highly recommend! I will always call Dunn Maintenance for my pressure washing needs.&rdquo;</div>
@@ -760,7 +898,7 @@
 </section>
 
 <!-- ── How It Works ── -->
-<section id="process" aria-labelledby="processHeading">
+<section class="process" id="process" aria-labelledby="processHeading">
   <div class="section-label scroll-anim">How it works</div>
   <h2 class="section-title scroll-anim" id="processHeading">Three steps. <em>No surprises.</em></h2>
   <p class="section-lead scroll-anim">From the first phone call to the final walk-through, here's exactly how this goes.</p>
@@ -820,7 +958,6 @@
         </div>
       </div>
 
-      <!-- Google Maps CTA -->
       <div class="scroll-anim" style="margin-top: 4px; margin-bottom: 8px;">
         <a href="https://www.google.com/maps/search/?api=1&query=Dunn+Maintenance+22+Country+Club+Dr+Longview+WA+98632"
            target="_blank" rel="noopener noreferrer"
@@ -847,7 +984,6 @@
       </div>
     </div>
 
-    <!-- Quote Form — submits via mailto so it works immediately, no backend required -->
     <form class="contact-form scroll-anim" id="quoteForm" novalidate>
       <div class="form-success" id="formSuccess" role="alert">
         ✓ &nbsp;Thanks! Your quote request has been sent to Jacob. He'll be in touch shortly.
@@ -934,6 +1070,35 @@
      SCRIPTS
      ══════════════════════════════════════════════ -->
 <script>
+  /* ── Intro controller — plays every page load ── */
+  (function () {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var intro = document.getElementById('intro');
+    function makeReady() { document.body.classList.add('ready'); }
+    if (!intro) { makeReady(); return; }
+    if (prefersReduced) { intro.remove(); makeReady(); return; }
+
+    setTimeout(function () {
+      intro.classList.add('is-exiting');
+    }, 1950);
+
+    intro.addEventListener('animationend', function handler(e) {
+      if (e.target === intro && e.animationName === 'introSlideUp') {
+        intro.remove();
+        makeReady();
+        intro.removeEventListener('animationend', handler);
+      }
+    });
+
+    /* Safety fallback — ensure hero becomes visible */
+    setTimeout(function () {
+      if (!document.body.classList.contains('ready')) {
+        if (intro.parentNode) intro.remove();
+        makeReady();
+      }
+    }, 4000);
+  })();
+
   /* ── Copyright year ── */
   document.getElementById('copyrightYear').textContent = new Date().getFullYear();
 
@@ -955,7 +1120,6 @@
     hamburger.classList.toggle('open', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen);
   });
-  /* Close mobile menu when a nav link is clicked */
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
@@ -964,26 +1128,23 @@
     });
   });
 
-  /* ── Quote form — mailto handler (works immediately, no backend needed) ── */
+  /* ── Quote form — mailto handler ── */
   const form      = document.getElementById('quoteForm');
   const successEl = document.getElementById('formSuccess');
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-
     const name    = document.getElementById('name').value.trim();
     const phone   = document.getElementById('phone').value.trim();
     const email   = document.getElementById('email').value.trim();
     const service = document.getElementById('service').value;
     const message = document.getElementById('message').value.trim();
 
-    /* Basic validation */
     if (!name || !phone || !service) {
       alert('Please fill in your name, phone, and the service you need.');
       return;
     }
 
-    /* Build mailto — opens Jacob's email client with everything pre-filled */
     const subject = encodeURIComponent('Quote Request: ' + service + ' — ' + name);
     const body = encodeURIComponent(
       'Name: ' + name + '\n' +
@@ -994,13 +1155,12 @@
     );
     window.location.href = 'mailto:Jacob@dunnmaintenance.us?subject=' + subject + '&body=' + body;
 
-    /* Show confirmation and reset */
     successEl.classList.add('show');
     form.reset();
     setTimeout(() => successEl.classList.remove('show'), 8000);
   });
 
-  /* ── Scroll Animations — Intersection Observer (no CDN required) ── */
+  /* ── Scroll Animations — Intersection Observer ── */
   (function () {
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.scroll-anim').forEach(el => el.classList.add('in-view'));
@@ -1015,7 +1175,7 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-    document.querySelectorAll('.scroll-anim').forEach((el, i) => {
+    document.querySelectorAll('.scroll-anim').forEach((el) => {
       const siblings = el.parentElement
         ? Array.from(el.parentElement.querySelectorAll(':scope > .scroll-anim'))
         : [];
@@ -1025,11 +1185,10 @@
     });
   })();
 
-  /* ── GSAP progressive enhancement — parallax only (purely decorative) ── */
+  /* ── GSAP progressive enhancement — subtle parallax ── */
   window.addEventListener('load', () => {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
-    gsap.fromTo('.hero-img-main img', { scale: 1 }, { scale: 1.07, duration: 14, ease: 'none' });
     gsap.to('.hero-img-main', {
       y: -55,
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
